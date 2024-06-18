@@ -13,10 +13,11 @@
         python311
       ] ++ (with pkgs.python311Packages; [
 	configargparse
+	tabulate
       ]);
 
       dev-deps = with pkgs; [
-	neovim
+#	neovim
       ];
     in
     {
