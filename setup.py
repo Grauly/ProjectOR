@@ -6,10 +6,6 @@ setup(
     name="projector",
     version="1.0",
     packages=find_packages(),
-    #scripts=(['projector.py','projector_utils.py'] + (glob('editors/*')) + (glob('terminals/*'))),
-    entry_points= {
-        'console_scripts': [
-            'projector = projector:main'
-        ]
-    }
+    include_package_data = True,
+    scripts=['projector.py'] + glob('utils/*)')
 )
