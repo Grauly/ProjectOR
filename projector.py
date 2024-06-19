@@ -6,6 +6,7 @@ import utils.projector_utils
 
 DEFAULT_SAVE_PATH = "~/.local/share/ProjectOR/projects.json"
 
+
 def main():
     p = configargparse.ArgParser()
     p.add("-l", action="store_true", help="list all projects")
@@ -28,7 +29,9 @@ def main():
         if options.editor is None:
             print(f"trying to launch a project without a editor specified")
             exit(-1)
-        utils.projector_utils.launch_project(options.launch_project, options.editor, options.terminal)
+        utils.projector_utils.launch_project(
+            options.launch_project, options.editor, options.terminal
+        )
         exit(0)
 
     if options.add is not None:
@@ -39,7 +42,11 @@ def main():
             print(f"could not add project, no path specified")
             exit(-1)
         utils.projector_utils.add_project(
-            DEFAULT_SAVE_PATH, options.path, options.editor, options.terminal, options.add
+            DEFAULT_SAVE_PATH,
+            options.path,
+            options.editor,
+            options.terminal,
+            options.add,
         )
         exit(0)
 
@@ -54,6 +61,7 @@ def main():
     if options.d is not None:
         utils.projector_utils.delete_project(DEFAULT_SAVE_PATH, options.d)
         exit(0)
+
 
 print("hello from ProjectOR")
 main()

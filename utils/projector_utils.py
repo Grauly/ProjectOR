@@ -8,7 +8,9 @@ from tabulate import tabulate
 
 def launch_project(projectdir, editor, terminal):
     try:
-        editor_handler = importlib.import_module(f"utils.editors.{editor}", package=__name__)
+        editor_handler = importlib.import_module(
+            f"utils.editors.{editor}", package=__name__
+        )
     except ImportError as e:
         print(f"could not find module for editor: {editor} {e}")
         exit(-1)

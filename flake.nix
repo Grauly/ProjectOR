@@ -20,12 +20,9 @@
 
       build-deps = with pkgs; [
         python311
-	tree
       ] ++ (with pkgs.python311Packages; [
         configargparse
         tabulate
-	setuptools-git
-	setuptools
       ]);
 
       dev-deps = with pkgs; [
@@ -37,10 +34,6 @@
         src = ./.;
         doCheck = false;
         propagatedBuildInputs = build-deps;
-#	buildPhase = ''
-#		ls -lsa .
-#		echo $out
-#	'';
       };
     in
     {
