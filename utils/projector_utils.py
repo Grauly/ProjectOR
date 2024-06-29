@@ -2,29 +2,41 @@
 import subprocess
 import importlib
 import json
-import os
 from tabulate import tabulate
+from pathlib import Path
 
-
-def launch_project(projectdir, editor, terminal):
+def find_editor(editor):
     try:
-        editor_handler = importlib.import_module(
+        return importlib.import_module(
             f"utils.editors.{editor}", package=__name__
         )
     except ImportError as e:
-        print(f"could not find module for editor: {editor} {e}")
+        print(f"could not find module for editor: {editor}")
         exit(-1)
+
+def find_terminal(terminal):
     if terminal is not None:
         try:
-            terminal_handler = importlib.import_module(
+            return importlib.import_module(
                 f"utils.terminals.{terminal}", package=__name__
             )
         except ImportError:
             print(f"could not find module for terminal: {terminal}")
             exit(-1)
+
+def find_flake(projectdir):
+    try:
+        flake = open(f"{projectdir}flake.nix")
+    except FileNotFoundError as e:
+        print(f'could not find flake at {projectdir}, aborting')
+        exit(-1)
+
+def launch_project(projectdir, editor, terminal):
+    editor_handler = find_editor(editor)
+    terminal_handler = find_terminal(terminal)
+    find_flake(projectdir)
     if editor_handler.needs_kill():
         editor_handler.kill()
-    flake = open(f"{projectdir}flake.nix")
     launch_command = (
         ["nix", "develop", f"{projectdir}", "--command"]
         + editor_handler.launch_command(projectdir)
@@ -36,7 +48,9 @@ def launch_project(projectdir, editor, terminal):
 
 
 def ensureFile(save_path):
-    if not os.path.exists(save_path):
+    path = Path(save_path)
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
         with open(save_path, "w") as new_file:
             new_file.write("[]")
 

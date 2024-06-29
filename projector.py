@@ -4,7 +4,7 @@ import subprocess
 
 import utils.projector_utils
 
-DEFAULT_SAVE_PATH = "~/.local/share/ProjectOR/projects.json"
+DEFAULT_SAVE_PATH = "~/.local/share/projector/projects.json"
 
 
 def main():
@@ -63,5 +63,4 @@ def main():
         exit(0)
 
 
-print("hello from ProjectOR")
 main()

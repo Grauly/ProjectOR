@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-import subsystem
+import subprocess
 
 def needs_kill():
     return True
 
 def kill():
-    subsystem.run['ps', 'x', '|' ,'grep' ,'"idea"' ,'|' ,'grep' ,'-v' ,'"grep"' ,'|' ,'sed' ,'"s/' ,'*\([0-9]*\)' ,'.*/\1/"' ,'|' ,'xargs' ,'kill']
+    subprocess.run(['ps', '-x', '|' ,'grep' ,'"idea"' ,'|' ,'grep' ,'-v' ,'"grep"' ,'|' ,'sed' ,'"s/' ,'*\([0-9]*\)' ,'.*/\1/"' ,'|' ,'xargs' ,'kill'])
 
 def launch_command(project_dir):
-    return [f"idea-community", "."]
+    return [f"idea-community", f"{project_dir}"]
